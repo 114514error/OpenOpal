@@ -1,0 +1,32 @@
+{
+	"schemaVersion": 1,
+	"id": "opal",
+	"version": "2.0.0",
+	"name": "Opal v2",
+	"description": "we are charlie kirk!!!!!!",
+	"authors": [
+		"tear",
+		"charlie kirk"
+	],
+	"contact": {
+		"homepage": "https://seegore.com",
+		"sources": "yes"
+	},
+	"license": "GPL-3.0",
+	"icon": "assets/opal/icon.png",
+	"environment": "client",
+	"entrypoints": {
+		"client": [
+			"wtf.opal.OpalFabric"
+		]
+	},
+	"mixins": [
+		"opal.mixins.json"
+	],
+    "accessWidener": "opal.accesswidener",
+	"depends": {
+		"fabricloader": ">=0.19.3",
+		"minecraft": "~1.21.11",
+		"java": ">=21"
+	}
+}
