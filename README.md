@@ -3,10 +3,9 @@
 # OpenOpal
 ***
 ## Introduction
-This is a free and open-source hack client maked for Minecraft fabric 1.21.11 , which is based on the famous trashy Opal client but with Grim bypasses.
+This is a free and open-source hack client maked for Minecraft fabric 1.21.10 , which is based on the famous trashy Opal client but with Grim bypasses.
 
 ## What did we(HakuriTeam) do?
-[~] updated to 1.21.11 to make it compatible more mods and servers (oh the damn Mixin)
 
 [+]Grim Criticals
 
