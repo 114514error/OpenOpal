@@ -1,5 +1,3 @@
-# 提示 Mixin写炸了 先别用
-
 # OpenOpal
 ***
 ## Introduction

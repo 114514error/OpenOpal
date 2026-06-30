@@ -109,8 +109,12 @@ public final class BoundedNumberPropertyComponent extends PropertyPanel<BoundedN
             highValueString += getProperty().getSuffix();
         }
 
-        font.drawString(lowValueString, sliderX + lowAnim - (font.getStringWidth(lowValueString, 5.5F) / 2), y + 22f, 5.5F, ColorUtility.applyOpacity(-1, 0.8F));
-        font.drawString(highValueString, sliderX + highAnim - (font.getStringWidth(highValueString, 5.5F) / 2), y + 22f, 5.5F, ColorUtility.applyOpacity(-1, 0.8F));
+        final float lowValueWidth = font.getStringWidth(lowValueString, 5.5F);
+        final float highValueWidth = font.getStringWidth(highValueString, 5.5F);
+        final float lowValueX = Math.max(x + 4, Math.min(x + width - lowValueWidth - 4, sliderX + lowAnim - (lowValueWidth / 2)));
+        final float highValueX = Math.max(x + 4, Math.min(x + width - highValueWidth - 4, sliderX + highAnim - (highValueWidth / 2)));
+        font.drawString(lowValueString, lowValueX, y + 22f, 5.5F, ColorUtility.applyOpacity(-1, 0.8F));
+        font.drawString(highValueString, highValueX, y + 22f, 5.5F, ColorUtility.applyOpacity(-1, 0.8F));
     }
 
     @Override

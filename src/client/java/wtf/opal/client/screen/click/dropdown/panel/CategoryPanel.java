@@ -29,6 +29,8 @@ public final class CategoryPanel extends OpalPanelComponent {
 
     private final boolean lastPanel;
     private boolean closing;
+    private boolean draggingAllowed, dragging;
+    private float baseX, baseY, dragOffsetX, dragOffsetY, dragMouseOffsetX, dragMouseOffsetY;
 
     private final List<ModulePanel> modulePanelList = new ArrayList<>();
 
@@ -41,6 +43,7 @@ public final class CategoryPanel extends OpalPanelComponent {
     @Override
     public void render(DrawContext context, int mouseX, int mouseY, float delta) {
         openAnimation.run(closing ? 0 : 1);
+        updateDrag(mouseX, mouseY);
 
         if (lastPanel && openAnimation.isFinished() && closing) {
             mc.setScreen(null);
@@ -80,6 +83,13 @@ public final class CategoryPanel extends OpalPanelComponent {
 
     @Override
     public void mouseClicked(double mouseX, double mouseY, int button) {
+        if (button == 0 && draggingAllowed && HoverUtility.isHovering(x, y, width, height, mouseX, mouseY)) {
+            dragging = true;
+            dragMouseOffsetX = (float) mouseX - x;
+            dragMouseOffsetY = (float) mouseY - y;
+            return;
+        }
+
         modulePanelList.forEach(modulePanel -> modulePanel.mouseClicked(mouseX, mouseY, button));
     }
 
@@ -95,6 +105,10 @@ public final class CategoryPanel extends OpalPanelComponent {
 
     @Override
     public void mouseReleased(double mouseX, double mouseY, int button) {
+        if (button == 0) {
+            dragging = false;
+        }
+
         modulePanelList.forEach(modulePanel -> modulePanel.mouseReleased(mouseX, mouseY, button));
     }
 
@@ -147,6 +161,40 @@ public final class CategoryPanel extends OpalPanelComponent {
         final float overflowPadding = scissorHeight == relativeScreenHeight ? y : 0;
 
         return Math.max(0, totalHeight - scissorHeight + overflowPadding);
+    }
+
+    public void setBasePosition(final float baseX, final float baseY) {
+        this.baseX = baseX;
+        this.baseY = baseY;
+    }
+
+    public void setDraggingAllowed(final boolean draggingAllowed) {
+        this.draggingAllowed = draggingAllowed;
+        if (!draggingAllowed) {
+            this.dragging = false;
+        }
+    }
+
+    public float getDragOffsetX() {
+        return dragOffsetX;
+    }
+
+    public float getDragOffsetY() {
+        return dragOffsetY;
+    }
+
+    private void updateDrag(final int mouseX, final int mouseY) {
+        if (!draggingAllowed || !dragging || mouseX == -1 || mouseY == -1) {
+            return;
+        }
+
+        final float newX = mouseX - dragMouseOffsetX;
+        final float newY = mouseY - dragMouseOffsetY;
+        final float maxX = mc.getWindow().getScaledWidth() - width;
+        final float maxY = mc.getWindow().getScaledHeight() - height;
+
+        this.dragOffsetX = Math.max(-baseX, Math.min(maxX - baseX, newX - baseX));
+        this.dragOffsetY = Math.max(-baseY, Math.min(maxY - baseY, newY - baseY));
     }
 
 }

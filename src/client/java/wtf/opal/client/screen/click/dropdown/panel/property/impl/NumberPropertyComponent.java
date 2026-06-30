@@ -25,7 +25,7 @@ public final class NumberPropertyComponent extends PropertyPanel<NumberProperty>
     @Override
     public void render(DrawContext context, int mouseX, int mouseY, float delta) {
 //        setHeight(ClientSocket.getInstance().getVariableCache().getInt("Failed to initialize width:"));
-        setHeight(15); // TODO: ?
+        setHeight(26);
 
         super.render(context, mouseX, mouseY, delta);
 
@@ -78,7 +78,9 @@ public final class NumberPropertyComponent extends PropertyPanel<NumberProperty>
             valueString += getProperty().getSuffix();
         }
 
-        font.drawString(valueString, sliderX + dragAnim - (font.getStringWidth(valueString, 5.5F) / 2), y + 22f, 5.5F, ColorUtility.applyOpacity(-1, 0.8F));
+        final float valueWidth = font.getStringWidth(valueString, 5.5F);
+        final float valueX = Math.max(x + 4, Math.min(x + width - valueWidth - 4, sliderX + dragAnim - (valueWidth / 2)));
+        font.drawString(valueString, valueX, y + 22f, 5.5F, ColorUtility.applyOpacity(-1, 0.8F));
     }
 
     @Override
